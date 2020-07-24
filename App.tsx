@@ -1,10 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Ionicons } from '@expo/vector-icons';
 
-import Page from './components/Page';
+import Header from './components/Header';
 
 const { width, height } = Dimensions.get('window');
 
@@ -12,8 +11,9 @@ export default function App() {
 	const [selected, setSelected] = useState(1);
 
 	return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 		<View style={styles.container}>
-
+            <Header></Header>
 			<View style={styles.pager}>
 				<ScrollView horizontal decelerationRate="fast" bounces={true} showsHorizontalScrollIndicator={false}>
 					<TouchableOpacity activeOpacity={1} onPress={()=>setSelected(1)}>
@@ -23,12 +23,13 @@ export default function App() {
 						<Text style={[styles.label, selected == 2 ? styles.select : null]}>Box Office</Text>
 					</TouchableOpacity>
 					<TouchableOpacity activeOpacity={1} onPress={()=>setSelected(3)}>
-						<Text style={[styles.label, selected == 3 ? styles.select : null]}>Coming Soon</Text>
+						<Text style={[styles.label, selected == 3 ? styles.select : null, { marginRight:32}]}>Coming Soon</Text>
 					</TouchableOpacity>
 				</ScrollView>
 			</View>
 			<StatusBar style="auto" />
 		</View>
+        </TouchableWithoutFeedback>
 	);
 }
 
@@ -37,10 +38,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	pager: {
-		marginTop: 128,
+		marginTop: 48,
 	},
 	label: {
-		marginHorizontal: 32,
+		marginLeft: 32,
 		fontSize: 32,
 		color: '#B9B9C5',
 	},
