@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity, TouchableWithoutF
 import { ScrollView } from 'react-native-gesture-handler';
 
 import Header from './components/Header';
+import List from './components/List';
 
 const { width, height } = Dimensions.get('window');
 
@@ -26,6 +27,13 @@ const arrayFetch = [
 	},
 ];
 
+interface Movie {
+	id: number;
+	title: string;
+	poster: string;
+	note: number;
+}
+
 export default function App() {
 	const [selected, setSelected] = useState(0);
 
@@ -40,7 +48,18 @@ export default function App() {
 		fetch(arrayFetch[nb].url)
 			.then((response) => response.json())
 			.then((responseJson) => {
-				setMovies(responseJson.results);
+                setMovies(responseJson.results);
+                var res:any = [];
+				responseJson.results.map((x: any) => {
+					var movie: Movie = {
+                        id : x.id,
+                        title: x.original_title,
+                        poster: x.poster_path,
+                        note: x.popularity
+                    }
+                    res.push(movie)
+                });
+                setMovies(res);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -71,6 +90,7 @@ export default function App() {
 						</TouchableOpacity>
 					</ScrollView>
 				</View>
+				<List movies={movies} ></List>
 				<StatusBar style="auto" />
 			</View>
 		</TouchableWithoutFeedback>
