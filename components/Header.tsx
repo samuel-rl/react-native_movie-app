@@ -15,25 +15,24 @@ const Header = () => {
 
 	useEffect(() => {
 		Keyboard.addListener('keyboardDidHide', _keyboardDidHide);
-    }, []);
-    
-    const research = useRef();
+	}, []);
+
+	const research = useRef();
 
 	return (
 		<View style={styles.cont}>
 			<Ionicons name="md-menu" size={24}></Ionicons>
 			<TextInput
-            
 				multiline={false}
 				onChangeText={(text) => onChangeText(text)}
 				placeholder="search"
 				style={styles.textInput}
-                value={value}
-                ref={research}
+				value={value}
+				ref={research}
 			></TextInput>
-            <TouchableOpacity onPress={()=>research.current.focus()}>
-			    <Ionicons name="md-search" size={24} ></Ionicons>
-            </TouchableOpacity>
+			<TouchableOpacity onPress={() => research.current.focus()}>
+				<Ionicons name="md-search" size={24}></Ionicons>
+			</TouchableOpacity>
 		</View>
 	);
 };
@@ -47,8 +46,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	textInput: {
-        width: width - 24*2 - 32-2 - 40,
-        textAlign: 'center',
+		width: width - 24 * 2 - 32 - 2 - 40,
+		textAlign: 'center',
 		marginBottom: 0,
 	},
 });
