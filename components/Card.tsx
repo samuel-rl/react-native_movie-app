@@ -23,6 +23,13 @@ const Card = ({ id, title, poster, note }: CardProps) => {
 	return (
 		<View style={styles.container}>
 			<Image style={styles.image} source={{ uri: 'https://image.tmdb.org/t/p/original' + poster }}></Image>
+			<View style={styles.containerTitle}>
+				<Text style={styles.title}>{title}</Text>
+                <View style={styles.notes}>
+                    <FontAwesome name="star" size={24} color="#fcc418" />
+				    <Text style={styles.note}>{Math.round(note/10 * 10) / 10}</Text>
+                </View>
+			</View>
 		</View>
 	);
 };
