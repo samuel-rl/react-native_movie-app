@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
-import { usePanGestureHandler, withDecay, diffClamp } from 'react-native-redash';
-import Animated from 'react-native-reanimated';
+import { usePanGestureHandler, withOffset, translate, withDecay, diffClamp } from 'react-native-redash';
+import Animated, { interpolate, Extrapolate, add } from 'react-native-reanimated';
 
 import Card, { CONTAINER_WIDTH, CONTAINER_HEIGHT, CARD_HEIGHT } from './Card';
 
@@ -23,13 +23,14 @@ const List = ({ movies }: ListProps) => {
 	const [containerHeight, setContainerHeight] = useState(height);
 	const visibleCards = Math.floor(CONTAINER_HEIGHT / CARD_HEIGHT);
 	const { gestureHandler, translation, velocity, state } = usePanGestureHandler();
-	const translateX = diffClamp(
+	console.log(-CARD_HEIGHT * movies.length + visibleCards * CARD_HEIGHT);
+	const x = diffClamp(
 		withDecay({
 			value: translation.x,
 			velocity: velocity.x,
 			state,
 		}),
-		-CONTAINER_WIDTH*movies.length + visibleCards* CONTAINER_WIDTH,
+		-CONTAINER_WIDTH * movies.length + visibleCards * CONTAINER_WIDTH,
 		0
 	);
 	return (
@@ -43,8 +44,36 @@ const List = ({ movies }: ListProps) => {
 				}) => setContainerHeight(height)}
 			>
 				{movies.map(({ title, poster, note, id }, index) => {
+					const positionX = add(x, index * CONTAINER_HEIGHT);
+					const isDisappearing = -CONTAINER_WIDTH;
+					const isLeft = 0;
+					const isRight = CONTAINER_WIDTH * (visibleCards - 1);
+					const isAppearing = CONTAINER_WIDTH * visibleCards;
+					const translateXWithScale = interpolate(positionX, {
+						inputRange: [isRight, isAppearing],
+						outputRange: [0, CONTAINER_WIDTH / 4],
+					});
+					const translateX = add(
+						interpolate(x, {
+							inputRange: [-CONTAINER_WIDTH * index, 0],
+							outputRange: [-CONTAINER_WIDTH * index, 0],
+							extrapolate: Extrapolate.CLAMP,
+						}),
+						translateXWithScale
+					);
+					const scale = interpolate(positionX, {
+						inputRange: [isDisappearing, isLeft, isRight, isAppearing],
+						outputRange: [0.5, 1, 1, 0.5],
+						extrapolate: Extrapolate.CLAMP,
+					});
+					const opacity = interpolate(positionX, {
+						inputRange: [isDisappearing, isLeft, isRight, isAppearing],
+						outputRange: [0.5, 1, 1, 0.5],
+						extrapolate: Extrapolate.CLAMP,
+					});
+					console.log(title);
 					return (
-						<Animated.View key={index} style={[{ transform: [{ translateX }] }]}>
+						<Animated.View key={index} style={[{ opacity, transform: [{ translateX }, { scale }] }]}>
 							<Card title={title} poster={poster} note={note} id={id}></Card>
 						</Animated.View>
 					);
@@ -56,8 +85,8 @@ const List = ({ movies }: ListProps) => {
 
 const styles = StyleSheet.create({
 	container: {
-        flexDirection: 'row',
-    },
+		flexDirection: 'row',
+	},
 	movie: {
 		fontSize: 22,
 		flexDirection: 'row',
