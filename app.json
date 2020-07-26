@@ -16,6 +16,10 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+        "package": "com.samuel.movieapp",
+        "versionCode": 1
+    },
     "ios": {
       "supportsTablet": true
     },
