@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import Header from './components/Header';
@@ -35,7 +35,9 @@ interface Movie {
 }
 
 export default function App() {
-	const [selected, setSelected] = useState(0);
+    const [selected, setSelected] = useState(0);
+    
+    const [loading, setLoading] = useState(true);
 
 	const [movies, setMovies] = useState([]);
 
@@ -44,6 +46,7 @@ export default function App() {
 	}, []);
 
 	const changingPage = (nb: number) => {
+        setLoading(true);
 		setSelected(nb);
 		fetch(arrayFetch[nb].url)
 			.then((response) => response.json())
@@ -60,6 +63,7 @@ export default function App() {
                     res.push(movie)
                 });
                 setMovies(res);
+                setLoading(false);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -90,8 +94,8 @@ export default function App() {
 						</TouchableOpacity>
 					</ScrollView>
 				</View>
-				<List movies={movies} ></List>
-				<StatusBar style="auto" />
+				{loading ? <View style={styles.rendering}><ActivityIndicator size="large"/></View> : <List movies={movies} ></List>}
+                <StatusBar style="auto" />
 			</View>
 		</TouchableWithoutFeedback>
 	);
@@ -111,5 +115,10 @@ const styles = StyleSheet.create({
 	},
 	select: {
 		color: '#12153D',
-	},
+    },
+    rendering: {
+        height: height*0.80,
+        alignItems: "center",
+        justifyContent: "center"
+    }
 });
