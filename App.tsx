@@ -58,7 +58,7 @@ export default function App() {
                         id : x.id,
                         title: x.original_title,
                         poster: x.poster_path,
-                        note: x.popularity
+                        note: x.vote_average
                     }
                     res.push(movie)
                 });

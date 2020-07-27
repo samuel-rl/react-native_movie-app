@@ -27,7 +27,7 @@ const Card = ({ id, title, poster, note }: CardProps) => {
 				<Text numberOfLines={1} style={styles.title}>{title}</Text>
                 <View style={styles.notes}>
                     <FontAwesome name="star" size={24} color="#fcc418" />
-				    <Text style={styles.note}>{Math.round(note/10 * 10) / 10}</Text>
+				    <Text style={styles.note}>{note*2}</Text>
                 </View>
 			</View>
 		</View>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         width: CONTAINER_WIDTH,
         height: CONTAINER_HEIGHT,
         alignItems: "center",
-        marginTop: 72
+        marginTop: 72,
     },
 	image: {
 		width: CARD_WIDTH,
