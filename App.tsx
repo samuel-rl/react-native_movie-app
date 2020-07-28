@@ -43,7 +43,7 @@ export default function App() {
 
 	useEffect(() => {
 		changingPage(0);
-	}, []);
+    }, []);
 
 	const changingPage = (nb: number) => {
         setLoading(true);

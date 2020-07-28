@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Animated, Image } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; 
 
 const { width, height } = Dimensions.get('window');
 
 const ratio = 480 / 320;
 
-export const CONTAINER_WIDTH = width;
+export const CONTAINER_WIDTH = width*0.75;
 export const CONTAINER_HEIGHT = height*0.64;
 
 export const CARD_WIDTH = width * 0.65;
@@ -16,7 +16,7 @@ interface CardProps {
 	id: number;
 	title: string;
 	poster: string;
-	note: number;
+    note: number;
 }
 
 const Card = ({ id, title, poster, note }: CardProps) => {
