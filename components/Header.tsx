@@ -25,7 +25,6 @@ const Header = () => {
 			<TextInput
 				multiline={false}
 				onChangeText={(text) => onChangeText(text)}
-				placeholder="search"
 				style={styles.textInput}
 				value={value}
 				ref={research}

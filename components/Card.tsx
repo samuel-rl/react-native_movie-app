@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -20,7 +21,9 @@ interface CardProps {
 }
 
 const Card = ({ id, title, poster, note }: CardProps) => {
+    const navigation = useNavigation();
 	return (
+        <TouchableOpacity activeOpacity={1} onPress={()=> {navigation.navigate(`Movie`, {title: title})}}>
 		<View style={styles.container}>
 			<Image style={styles.image} source={{ uri: 'https://image.tmdb.org/t/p/original' + poster }}></Image>
 			<View style={styles.containerTitle}>
@@ -31,6 +34,7 @@ const Card = ({ id, title, poster, note }: CardProps) => {
                 </View>
 			</View>
 		</View>
+        </TouchableOpacity>
 	);
 };
 
