@@ -12,7 +12,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 import Notes from '../components/Notes';
-import Genres from '../components/Genres'
+import Genres from '../components/Genres';
+import Plot from '../components/Plot';
 
 const { width, height } = Dimensions.get('window');
 
@@ -66,13 +67,18 @@ export default function Movie({ route, navigation }: any) {
 		return (
 			<View style={styles.container}>
 				<Image style={styles.backdrop} source={{ uri: movie.backdrop }}></Image>
-                <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+				<TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
 					<Ionicons name="ios-arrow-back" size={24} color="black" />
 				</TouchableOpacity>
 				<View style={styles.notes}>
 					<Notes note={movie.note} nbNote={movie.numberNote} popularity={movie.popularity}></Notes>
 				</View>
-                <Genres genres={movie.genres}></Genres>
+				<View style={styles.genres}>
+					<Genres genres={movie.genres}></Genres>
+				</View>
+				<View style={styles.plot}>
+					<Plot plot={movie.plot}></Plot>
+				</View>
 			</View>
 		);
 	}
@@ -94,9 +100,11 @@ const styles = StyleSheet.create({
 		width: width,
 		height: height * 0.346,
 		borderBottomLeftRadius: 40,
+	},
+	notes: {
+		alignItems: 'flex-end',
+		marginTop: -height * 0.05,
     },
-    notes: {
-        alignItems: "flex-end",
-        marginTop: (- height * 0.05)
+    genres: {
     }
 });

@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: 50,
 		flexDirection: 'row',
         justifyContent: 'space-around',
-        alignItems: "center"
+        alignItems: "center",
 	},
 	un: {
 		alignItems: 'center',
