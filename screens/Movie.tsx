@@ -1,11 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, Props } from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import {
+	StatusBar,
+	StyleSheet,
+	Text,
+	View,
+	Dimensions,
+	TouchableOpacity,
+	Image,
+	ActivityIndicator,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import Notes from '../components/Notes'
+import Notes from '../components/Notes';
+import Genres from '../components/Genres'
 
 const { width, height } = Dimensions.get('window');
+
+const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
 interface Movie {
 	id: number;
@@ -15,21 +26,20 @@ interface Movie {
 	numberNote: number;
 	year: number;
 	runtime: number;
-	genre: { id: number; name: string }[];
-    plot: string;
-    popularity: number
+	genres: { id: number; name: string }[];
+	plot: string;
+	popularity: number;
 }
 
-export default function Movie({ route , navigation }: any) {
+export default function Movie({ route, navigation }: any) {
 	const [movie, setMovie] = useState<Movie | null>(null);
 
 	const { id } = route.params;
 
 	useEffect(() => {
-		fetch('https://api.themoviedb.org/3/movie/' + id + '?api_key=c059bd0849de3441fe8eaa21f8db479f&language=fr')
+		fetch('https://api.themoviedb.org/3/movie/' + id + '?api_key=c059bd0849de3441fe8eaa21f8db479f')
 			.then((response) => response.json())
 			.then((responseJson) => {
-                console.log(responseJson)
 				var movie: Movie = {
 					id: id,
 					title: responseJson.original_title,
@@ -38,11 +48,11 @@ export default function Movie({ route , navigation }: any) {
 					numberNote: responseJson.vote_count,
 					year: responseJson.release_date,
 					runtime: responseJson.runtime,
-					genre: responseJson.genres,
-                    plot: responseJson.overview,
-                    popularity: responseJson.popularity
+					genres: responseJson.genres,
+					plot: responseJson.overview,
+					popularity: responseJson.popularity,
 				};
-                setMovie(movie);
+				setMovie(movie);
 			});
 	}, []);
 
@@ -55,11 +65,14 @@ export default function Movie({ route , navigation }: any) {
 	} else {
 		return (
 			<View style={styles.container}>
-				<TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
+				<Image style={styles.backdrop} source={{ uri: movie.backdrop }}></Image>
+                <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
 					<Ionicons name="ios-arrow-back" size={24} color="black" />
 				</TouchableOpacity>
-                <Image style={styles.backdrop} source={{ uri: movie.backdrop }}></Image>
-                <Notes note={movie.note} nbNote={movie.numberNote} popularity={movie.popularity}></Notes>
+				<View style={styles.notes}>
+					<Notes note={movie.note} nbNote={movie.numberNote} popularity={movie.popularity}></Notes>
+				</View>
+                <Genres genres={movie.genres}></Genres>
 			</View>
 		);
 	}
@@ -70,12 +83,20 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	back: {
-		marginLeft: width * 0.06,
-		marginTop: height * 0.055,
+		position: 'absolute',
+		width: 50,
+		height: 50,
+		left: width * 0.06,
+		top: height * 0.055 + STATUSBAR_HEIGHT,
+	},
+	backdrop: {
+		marginTop: STATUSBAR_HEIGHT,
+		width: width,
+		height: height * 0.346,
+		borderBottomLeftRadius: 40,
     },
-    backdrop:{
-        width: width,
-        height: height*0.346,
-        borderBottomLeftRadius: 40
+    notes: {
+        alignItems: "flex-end",
+        marginTop: (- height * 0.05)
     }
 });
