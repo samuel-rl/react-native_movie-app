@@ -6,12 +6,13 @@ const { width, height } = Dimensions.get('window');
 
 interface NotesProps {
 	note: number;
-	nbNote: number;
+    nbNote: number;
+    popularity: number;
 }
 
-const Notes = ({ note, nbNote }: NotesProps) => {
+const Notes = ({ note, nbNote, popularity }: NotesProps) => {
 
-    //TODO: change metacritic score and critic reviews
+    //TODO: change critic reviews
 
 	return (
 		<View style={styles.container}>
@@ -28,7 +29,7 @@ const Notes = ({ note, nbNote }: NotesProps) => {
 			</View>
 			<View style={styles.trois}>
                 <View style={styles.greenView}>
-                    <Text style={{ color: '#FFF', fontSize:14, textAlign: 'center' }} >86</Text>
+    <Text style={{ color: '#FFF', fontSize:14, textAlign: 'center' }} >{Math.floor(popularity)}</Text>
                 </View>
 				<Text>Metascore</Text>
 				<Text  style={{ color: '#9A9BB2', fontSize:12 }}>{nbNote} critic reviews</Text>

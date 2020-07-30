@@ -23,7 +23,7 @@ interface CardProps {
 const Card = ({ id, title, poster, note }: CardProps) => {
     const navigation = useNavigation();
 	return (
-        <TouchableOpacity activeOpacity={1} onPress={()=> {navigation.navigate(`Movie`, {title: title})}}>
+        <TouchableOpacity activeOpacity={1} onPress={()=> {navigation.navigate(`Movie`, {id: id})}}>
 		<View style={styles.container}>
 			<Image style={styles.image} source={{ uri: 'https://image.tmdb.org/t/p/original' + poster }}></Image>
 			<View style={styles.containerTitle}>
