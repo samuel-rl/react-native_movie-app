@@ -36,10 +36,10 @@ const styles = StyleSheet.create({
         marginVertical: 9,
     },
     firstElement: {
-        marginLeft: 32
+        marginLeft: width *0.06
     }, 
     lastElement: {
-        marginRight: 32
+        marginRight: width *0.06
     }
 });
 

@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Notes from '../components/Notes';
 import Genres from '../components/Genres';
 import Plot from '../components/Plot';
+import Infos from '../components/Infos'
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,7 +26,7 @@ interface Movie {
 	backdrop: string;
 	note: number;
 	numberNote: number;
-	year: number;
+	year: string;
 	runtime: number;
 	genres: { id: number; name: string }[];
 	plot: string;
@@ -41,6 +42,7 @@ export default function Movie({ route, navigation }: any) {
 		fetch('https://api.themoviedb.org/3/movie/' + id + '?api_key=c059bd0849de3441fe8eaa21f8db479f')
 			.then((response) => response.json())
 			.then((responseJson) => {
+                console.log(responseJson)
 				var movie: Movie = {
 					id: id,
 					title: responseJson.original_title,
@@ -73,6 +75,9 @@ export default function Movie({ route, navigation }: any) {
 				<View style={styles.notes}>
 					<Notes note={movie.note} nbNote={movie.numberNote} popularity={movie.popularity}></Notes>
 				</View>
+                <View style={styles.infos}>
+                    <Infos title={movie.title} year={movie.year} runtime={movie.runtime}></Infos>
+                </View>
 				<View style={styles.genres}>
 					<Genres genres={movie.genres}></Genres>
 				</View>
@@ -106,8 +111,12 @@ const styles = StyleSheet.create({
 		marginTop: -height * 0.05,
     },
     genres: {
+        marginTop: height* 0.020
     },
     plot: {
 
+    },
+    infos:{
+        marginTop: height *0.047,
     }
 });
