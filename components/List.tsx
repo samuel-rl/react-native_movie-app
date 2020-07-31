@@ -22,7 +22,7 @@ interface ListProps {
 const _MARGIN = (width - CONTAINER_WIDTH)/2;
 
 const List = ({ movies }: ListProps) => {
-	const [containerWidth, setContainerWidth] = useState(height);
+	const [containerWidth, setContainerWidth] = useState(-1);
     const visibleCards = Math.floor(1);
 	const { gestureHandler, translation, velocity, state } = usePanGestureHandler();
 	const x = diffClamp(
@@ -93,7 +93,7 @@ const List = ({ movies }: ListProps) => {
 const styles = StyleSheet.create({
 	container: {
         flexDirection: 'row',
-        marginHorizontal: _MARGIN
+        marginHorizontal: _MARGIN,
     },
 });
 

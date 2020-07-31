@@ -17,7 +17,7 @@ import Plot from '../components/Plot';
 
 const { width, height } = Dimensions.get('window');
 
-const STATUSBAR_HEIGHT = StatusBar.currentHeight;
+const STATUSBAR_HEIGHT = StatusBar.currentHeight ?? 0 ;
 
 interface Movie {
 	id: number;
@@ -52,7 +52,7 @@ export default function Movie({ route, navigation }: any) {
 					genres: responseJson.genres,
 					plot: responseJson.overview,
 					popularity: responseJson.popularity,
-				};
+                };
 				setMovie(movie);
 			});
 	}, []);
@@ -106,5 +106,8 @@ const styles = StyleSheet.create({
 		marginTop: -height * 0.05,
     },
     genres: {
+    },
+    plot: {
+
     }
 });

@@ -7,11 +7,12 @@ const { width, height } = Dimensions.get('window');
 
 const ratio = 480 / 320;
 
-export const CONTAINER_WIDTH = width*0.75;
+export const CONTAINER_WIDTH = width*0.65;
 export const CONTAINER_HEIGHT = height*0.64;
 
-export const CARD_WIDTH = width * 0.65;
-export const CARD_HEIGHT = CARD_WIDTH * ratio;
+export const CARD_HEIGHT = height * 0.45;
+export const CARD_WIDTH = CARD_HEIGHT / ratio;
+
 
 interface CardProps {
 	id: number;
@@ -43,7 +44,6 @@ const styles = StyleSheet.create({
         width: CONTAINER_WIDTH,
         height: CONTAINER_HEIGHT,
         alignItems: "center",
-        marginTop: 72,
     },
 	image: {
 		width: CARD_WIDTH,
