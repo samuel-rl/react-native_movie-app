@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         color: "#434670",
         fontSize: 16,
         marginHorizontal: 20,
-        marginVertical: 9,
+        marginVertical: height* 0.035/2 - 8,
     },
     firstElement: {
         marginLeft: width *0.06

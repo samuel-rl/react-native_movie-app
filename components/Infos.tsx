@@ -25,7 +25,7 @@ const Infos = ({ year, runtime, title }: InfosProps) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.containerTitle}>
-    <Text style={styles.title}>{title}</Text>
+    <Text numberOfLines={1} ellipsizeMode='tail' style={styles.title}>{title}</Text>
 				<View style={styles.containerTime}>
 					<Text style={styles.littleInfo}>{year.substring(0, 4)}</Text>
 					<Text style={styles.littleInfo}>PG-13</Text>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 	},
 	textAdd: {
 		color: '#fff',
-		fontSize: 28,
+		fontSize: 27,
 	},
 	containerTime: {
 		flexDirection: 'row',
@@ -70,9 +70,10 @@ const styles = StyleSheet.create({
 		fontSize: height * 0.02,
 	},
 	title: {
-		fontSize: height * 0.033,
+		fontSize: 26,
 		color: '#12153D',
-		margin: 0,
+        margin: 0,
+        maxWidth: width - ((width * 0.06)*2) - (height * 0.064) - 10,
 	},
 });
 

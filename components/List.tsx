@@ -66,7 +66,7 @@ const List = ({ movies }: ListProps) => {
                         }
                         const scale = interpolate(positionX, {
                             inputRange: [isDisappearing, isLeft, isRight, isAppearing],
-                            outputRange: [0.9, 1, 1, 0.9],
+                            outputRange: [0.95, 1, 1, 0.95],
                             extrapolate: Extrapolate.CLAMP,
                         });
                         const opacity = interpolate(positionX, {
@@ -76,7 +76,7 @@ const List = ({ movies }: ListProps) => {
                         });
                         const rotate = interpolate(positionX, {
                             inputRange: [isDisappearing, isLeft, isRight, isAppearing],
-                            outputRange: [-.15, 0, 0, .15],
+                            outputRange: [-.12, 0, 0, .12],
                             extrapolate: Extrapolate.CLAMP,
                         });
                         return (

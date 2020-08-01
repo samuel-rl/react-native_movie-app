@@ -19,15 +19,14 @@ const Plot = ({ plot }: PlotProps) => {
 const styles = StyleSheet.create({
 	container: {
         marginHorizontal: width *0.06,
-        marginTop: height*0.047
     },
     titlePlot: {
-        fontSize: 24,
+        fontSize: 22,
         color: "#12153D",
-        marginBottom: 16
+        marginBottom: height*0.015
     },
     plot: {
-        fontSize: 14,
+        fontSize: 13,
         color: "#737599"
     }
 });

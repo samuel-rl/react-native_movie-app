@@ -14,11 +14,12 @@ import { Ionicons } from '@expo/vector-icons';
 import Notes from '../components/Notes';
 import Genres from '../components/Genres';
 import Plot from '../components/Plot';
-import Infos from '../components/Infos'
+import Infos from '../components/Infos';
+import Cast from '../components/Cast';
 
 const { width, height } = Dimensions.get('window');
 
-const STATUSBAR_HEIGHT = StatusBar.currentHeight ?? 0 ;
+const STATUSBAR_HEIGHT = StatusBar.currentHeight ?? 0;
 
 interface Movie {
 	id: number;
@@ -42,7 +43,6 @@ export default function Movie({ route, navigation }: any) {
 		fetch('https://api.themoviedb.org/3/movie/' + id + '?api_key=c059bd0849de3441fe8eaa21f8db479f')
 			.then((response) => response.json())
 			.then((responseJson) => {
-                console.log(responseJson)
 				var movie: Movie = {
 					id: id,
 					title: responseJson.original_title,
@@ -54,7 +54,7 @@ export default function Movie({ route, navigation }: any) {
 					genres: responseJson.genres,
 					plot: responseJson.overview,
 					popularity: responseJson.popularity,
-                };
+				};
 				setMovie(movie);
 			});
 	}, []);
@@ -70,19 +70,22 @@ export default function Movie({ route, navigation }: any) {
 			<View style={styles.container}>
 				<Image style={styles.backdrop} source={{ uri: movie.backdrop }}></Image>
 				<TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-					<Ionicons name="ios-arrow-back" size={24} color="black" />
+					<Ionicons name="ios-arrow-back" size={30} color="black" />
 				</TouchableOpacity>
 				<View style={styles.notes}>
 					<Notes note={movie.note} nbNote={movie.numberNote} popularity={movie.popularity}></Notes>
 				</View>
-                <View style={styles.infos}>
-                    <Infos title={movie.title} year={movie.year} runtime={movie.runtime}></Infos>
-                </View>
+				<View style={styles.infos}>
+					<Infos title={movie.title} year={movie.year} runtime={movie.runtime}></Infos>
+				</View>
 				<View style={styles.genres}>
 					<Genres genres={movie.genres}></Genres>
 				</View>
 				<View style={styles.plot}>
 					<Plot plot={movie.plot}></Plot>
+				</View>
+				<View style={styles.cast}>
+					<Cast id={movie.id}></Cast>
 				</View>
 			</View>
 		);
@@ -101,22 +104,25 @@ const styles = StyleSheet.create({
 		top: height * 0.055 + STATUSBAR_HEIGHT,
 	},
 	backdrop: {
-		marginTop: STATUSBAR_HEIGHT,
 		width: width,
-		height: height * 0.346,
+		height: height * 0.345,
 		borderBottomLeftRadius: 40,
 	},
 	notes: {
 		alignItems: 'flex-end',
 		marginTop: -height * 0.05,
-    },
-    genres: {
-        marginTop: height* 0.020
-    },
-    plot: {
+	},
+	genres: {
+		marginTop: height * 0.02,
+	},
+	infos: {
+		marginTop: height * 0.042,
+	},
+	plot: {
+		marginTop: height * 0.042,
+	},
 
-    },
-    infos:{
-        marginTop: height *0.047,
-    }
+	cast: {
+		marginTop: height * 0.042,
+	},
 });
